@@ -9,7 +9,6 @@ var_dump($x);
 
 class CMP3File
 {
-    private $title;
     const TITLE_LENGTH = 30;
     const ARTIST_LENGTH = 30;
     const ALBUM_LENGTH = 30;
@@ -28,6 +27,8 @@ class CMP3File
         "genre" => self::GENRE_LENGTH,
     ];
 
+    /** @var string */
+    private $title;
     /** @var string  */
     private $artist;
     /** @var string  */
