@@ -1,14 +1,28 @@
 <?php
-$path = "/media/sf_SharedDisk/Bill Laurance-Swift01-Prologue_ Fjords.mp3";
-//$path = "/media/sf_SharedDisk/id3test.mp3";
-//var_dump(id3_get_tag($path));
-
-
-$x = new CMP3File($path);
-var_dump($x);
+$paths = [
+    "/media/sf_SharedDisk/Bill Laurance-Swift01-Prologue_ Fjords.mp3",
+    "/media/sf_SharedDisk/id3test.mp3"
+];
+foreach ($paths as $path)
+{
+    $x = new CMP3File($path);
+    $x->set(CMP3File::TITLE, "Title");
+    $x->set(CMP3File::ARTIST, "Artist");
+    $x->set(CMP3File::ALBUM, "Album");
+    $x->set(CMP3File::YEAR, "Year");
+    $x->set(CMP3File::COMMENT, "Comment");
+    var_dump($x);
+}
 
 class CMP3File
 {
+    const TITLE = "title";
+    const ARTIST = "artist";
+    const ALBUM = "album";
+    const YEAR = "year";
+    const COMMENT = "comment";
+    const GENRE = "genre";
+
     const TITLE_LENGTH = 30;
     const ARTIST_LENGTH = 30;
     const ALBUM_LENGTH = 30;
@@ -17,16 +31,21 @@ class CMP3File
     const GENRE_LENGTH = 1;
     const ID3_DATA_LEN = 128;
 
-    /** @var array  */
-    private static $fieldOrder = [
-        "title" => self::TITLE_LENGTH,
-        "artist" => self::ARTIST_LENGTH,
-        "album" => self::ALBUM_LENGTH,
-        "year" => self::YEAR_LENGTH,
-        "comment" => self::COMMENT_LENGTH,
-        "genre" => self::GENRE_LENGTH,
+    /**
+     * Fields ordered as per ID3 header
+     * @var array
+     */
+    private static $fieldConfig = [
+        self::TITLE=>       self::TITLE_LENGTH,
+        self::ARTIST =>     self::ARTIST_LENGTH,
+        self::ALBUM =>      self::ALBUM_LENGTH,
+        self::YEAR =>       self::YEAR_LENGTH,
+        self::COMMENT =>    self::COMMENT_LENGTH,
+        self::GENRE =>      self::GENRE_LENGTH,
     ];
 
+    /** @var string  */
+    private $path;
     /** @var string */
     private $title;
     /** @var string  */
@@ -44,12 +63,13 @@ class CMP3File
 
     const ID3TAG = 'TAG';
 
-    public function __construct($file)
+    public function __construct($path)
     {
-        if (file_exists($file))
+        $this->path = $path;
+        if (file_exists($path))
         {
-            $id_start = filesize($file) - self::ID3_DATA_LEN;
-            $fp = fopen($file, "r");
+            $id_start = filesize($path) - self::ID3_DATA_LEN;
+            $fp = fopen($path, "r");
             if ($fp)
             {
                 fseek($fp, $id_start);
@@ -58,10 +78,10 @@ class CMP3File
                 {
                     $this->isID3 = true;
                     $totalLen = strlen(self::ID3TAG);
-                    foreach (self::$fieldOrder as $field => $length)
+                    foreach (self::$fieldConfig as $field => $length)
                     {
                         $totalLen+= $length;
-                        $this->{$field} = fread($fp, $length);
+                        $this->$field = fread($fp, $length);
                     }
                     if ($totalLen != self::ID3_DATA_LEN)
                     {
@@ -70,6 +90,48 @@ class CMP3File
                 }
                 fclose($fp);
             }
+        }
+    }
+
+    /**
+     * @param string $attrib
+     * @return mixed
+     */
+    public function get($attrib)
+    {
+        $this->assertHasProperty($attrib);
+        return $this->$attrib;
+    }
+
+    /**
+     * @param string $attrib
+     * @param string $value
+     * @throws Exception
+     */
+    public function set($attrib, $value)
+    {
+        $this->assertHasProperty($attrib);
+        $maxLen = self::$fieldConfig[$attrib];
+        $truncatedLen = isset($value[$maxLen]) ? $maxLen : strlen($value);
+        $padLength = $maxLen - $truncatedLen;
+        if ($padLength < 0)
+        {
+            throw new Exception("Programming error - negative padding length");
+        }
+        $padding = str_repeat("\000", $padLength);
+        $this->$attrib = $value.$padding;
+    }
+
+    /**
+     * Ensures the property is valid AND is allowed to be set!
+     * @param string $attrib
+     * @throws Exception
+     */
+    private function assertHasProperty($attrib)
+    {
+        if (!isset($this->$attrib) && isset(self::$fieldConfig[$attrib]))
+        {
+            throw new Exception("Tried to access invalid property ($attrib)");
         }
     }
 } 
