@@ -13,5 +13,8 @@
             "oconnedk\\id3\\": "src/"
         }
     },
-    "require": {}
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "4.*"
+    }
 }
