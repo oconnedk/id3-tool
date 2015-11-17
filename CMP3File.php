@@ -83,6 +83,11 @@ class CMP3File
         }
     }
 
+    public function needsID3Info()
+    {
+        return $this->isID3Tagged() && $this->artist[0] == "\000" && $this->album[0] == "\000";
+    }
+
     /**
      * @return bool
      */
