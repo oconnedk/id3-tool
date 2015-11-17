@@ -23,3 +23,11 @@ Testing
 -------
 
     vendor/bin/phpunit Tests/
+
+Coding Standard
+---------------
+
+Uses PSR2 - enforced with PHPCS, like this:
+
+    ./vendor/bin/phpcs --config-set default_standard PSR2
+    ./vendor/bin/phpcs src/
