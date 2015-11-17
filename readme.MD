@@ -7,3 +7,13 @@ Status
 ------
 
 Work-in-progress
+
+Set-up
+------
+
+    composer require oconnedk/id3
+
+Running
+-------
+
+    php src/test.php

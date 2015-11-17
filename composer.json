@@ -1,0 +1,17 @@
+{
+    "name": "oconnedk/id3",
+    "description": "Simple ID3 processing",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel O'Connell",
+            "email": "me@mine.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "oconnedk\\id3\\": "src/"
+        }
+    },
+    "require": {}
+}
