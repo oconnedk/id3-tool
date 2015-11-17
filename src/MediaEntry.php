@@ -77,24 +77,18 @@ class MediaEntry
     private function inferNames()
     {
         $parts = explode(self::NAME_SEPARATOR, $this->dir);
-        if (count($parts) == 1)
-        {
-            // Folder name is probably just artist name...
+        if (count($parts) == 1) {
+        // Folder name is probably just artist name...
             $this->artistName = $this->dir;
-        }
-        else
-        {
+        } else {
             $this->artistName = $parts[0];
         }
         $parts = explode(self::NAME_SEPARATOR, basename($this->filename, self::MEDIA_TYPE_EXTENSION));
-        if (count($parts) == 1)
-        {
-            // Folder name is probably just artist name...
+        if (count($parts) == 1) {
+        // Folder name is probably just artist name...
             $this->trackName = $parts[0];
-        }
-        else if (count($parts) > 1)
-        {
-            // Use last separator for track name - hit and miss, maybe...
+        } elseif (count($parts) > 1) {
+        // Use last separator for track name - hit and miss, maybe...
             $this->trackName = $parts[count($parts) - 1];
         }
     }

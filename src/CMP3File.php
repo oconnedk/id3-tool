@@ -68,26 +68,21 @@ class CMP3File
     public function __construct($path)
     {
         $this->path = $path;
-        if (file_exists($path))
-        {
+        if (file_exists($path)) {
             $id_start = filesize($path) - self::ID3_DATA_LEN;
             $fp = fopen($path, "r");
-            if ($fp)
-            {
+            if ($fp) {
                 fseek($fp, $id_start);
                 $tag = fread($fp, strlen(self::ID3TAG));
-                if ($tag == self::ID3TAG)
-                {
+                if ($tag == self::ID3TAG) {
                     $this->isID3 = true;
                     $totalLen = strlen(self::ID3TAG);
-                    foreach (self::$fieldConfig as $field => $length)
-                    {
+                    foreach (self::$fieldConfig as $field => $length) {
                         $totalLen+= $length;
                         $this->$field = fread($fp, $length);
                     }
-                    if ($totalLen != self::ID3_DATA_LEN)
-                    {
-                        throw new Exception("Programming configuration error - unexpected field lengths ($totalLen)");
+                    if ($totalLen != self::ID3_DATA_LEN) {
+                        throw new \Exception("Programming configuration error - unexpected field lengths ($totalLen)");
                     }
                 }
                 fclose($fp);
@@ -125,7 +120,7 @@ class CMP3File
     /**
      * @param string $attrib
      * @param string $value
-     * @throws Exception
+     * @throws \Exception
      */
     public function set($attrib, $value)
     {
@@ -133,9 +128,8 @@ class CMP3File
         $maxLen = self::$fieldConfig[$attrib];
         $truncatedLen = isset($value[$maxLen]) ? $maxLen : strlen($value);
         $padLength = $maxLen - $truncatedLen;
-        if ($padLength < 0)
-        {
-            throw new Exception("Programming error - negative padding length");
+        if ($padLength < 0) {
+            throw new \Exception("Programming error - negative padding length");
         }
         $padding = str_repeat("\000", $padLength);
         $this->$attrib = $value.$padding;
@@ -144,13 +138,12 @@ class CMP3File
     /**
      * Ensures the property is valid AND is allowed to be set!
      * @param string $attrib
-     * @throws Exception
+     * @throws \Exception
      */
     private function assertHasProperty($attrib)
     {
-        if (!isset(self::$fieldConfig[$attrib]))
-        {
-            throw new Exception("Tried to access invalid property ($attrib)");
+        if (!isset(self::$fieldConfig[$attrib])) {
+            throw new \Exception("Tried to access invalid property ($attrib)");
         }
     }
-} 
+}

@@ -6,6 +6,7 @@
  * Time: 17:40
  */
 namespace oconnedk\id3;
+
 $loader = require __DIR__.'/../vendor/autoload.php';
 
 findFiles("/media/sf_SharedDisk/mp3/", str_replace(".", "", MediaEntry::MEDIA_TYPE_EXTENSION));
@@ -16,14 +17,12 @@ findFiles("/media/sf_SharedDisk/mp3/", str_replace(".", "", MediaEntry::MEDIA_TY
  */
 function findFiles($path, $extension)
 {
-    if (!dir($path))
-    {
+    if (!dir($path)) {
         throw new \Exception("$path is not a directory!");
     }
     $dirIter = new \RecursiveDirectoryIterator($path);
     $mainIter = new \RecursiveIteratorIterator($dirIter);
-    foreach (new \RegexIterator($mainIter, '/^.+\.'.$extension.'$/i', \RecursiveRegexIterator::GET_MATCH) as $match)
-    {
+    foreach (new \RegexIterator($mainIter, '/^.+\.'.$extension.'$/i', \RecursiveRegexIterator::GET_MATCH) as $match) {
         $path = current($match);
         $file = new MediaEntry($path);
         //var_dump($file);
@@ -31,13 +30,11 @@ function findFiles($path, $extension)
 
         print "$path - needs ID3? ".($id3->needsID3Info() ? "YES" : "NO")."\n";
         $trackNum = $id3->get(CMP3File::TRACK_NUMBER);
-        if ($trackNum)
-        {
+        if ($trackNum) {
             var_dump("TRACK NUM:", current(unpack("n", "\000$trackNum")), $trackNum);
         }
 
-        if (!$id3->needsID3Info())
-        {
+        if (!$id3->needsID3Info()) {
             var_dump($id3->isID3Tagged(), $id3);
         }
     }
@@ -48,8 +45,7 @@ $paths = [
     "/media/sf_SharedDisk/mp3/Bill Laurance-Swift01-Prologue_ Fjords.mp3",
     "/media/sf_SharedDisk/mp3/id3test.mp3"
 ];
-foreach ($paths as $path)
-{
+foreach ($paths as $path) {
     $x = new CMP3File($path);
 /*    $x->set(CMP3File::TITLE, "Title");
     $x->set(CMP3File::ARTIST, "Artist");
