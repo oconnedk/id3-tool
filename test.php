@@ -24,8 +24,22 @@ function findFiles($path, $extension)
     $mainIter = new RecursiveIteratorIterator($dirIter);
     foreach (new RegexIterator($mainIter, '/^.+\.'.$extension.'$/i', RecursiveRegexIterator::GET_MATCH) as $match)
     {
-        $file = new MediaEntry(current($match));
-        var_dump($file);
+        $path = current($match);
+        $file = new MediaEntry($path);
+        //var_dump($file);
+        $id3 = new CMP3File($path);
+
+        print "$path - needs ID3? ".($id3->needsID3Info() ? "YES" : "NO")."\n";
+        $trackNum = $id3->get(CMP3File::TRACK_NUMBER);
+        if ($trackNum)
+        {
+            var_dump("TRACK NUM:", current(unpack("n", "\000$trackNum")), $trackNum);
+        }
+
+        if (!$id3->needsID3Info())
+        {
+            var_dump($id3->isID3Tagged(), $id3);
+        }
     }
 }
 
@@ -43,7 +57,7 @@ foreach ($paths as $path)
     $x->set(CMP3File::YEAR, "Year");
     $x->set(CMP3File::COMMENT, "Comment");
 */
-    var_dump($x, "Needs ID3:", $x->needsID3Info());
+    //var_dump($x, "Needs ID3:", $x->needsID3Info());
 }
 
 
@@ -55,7 +69,8 @@ class MediaEntry
     private $dir;
     /** @var string  */
     private $filename;
-
+    /** @var string */
+    private $path;
     /** @var string  */
     private $artistName = "";
     /** @var string  */
@@ -64,6 +79,7 @@ class MediaEntry
 
     public function __construct($path)
     {
+        $this->path = $path;
         $dir = dirname($path);      // Find dir of path
         $parDir = dirname($dir);    // Find parent of dir
         $this->dir = basename(str_replace($parDir, "", $dir));  // Get rid of the "parent" part of the pathname

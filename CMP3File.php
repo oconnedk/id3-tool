@@ -6,32 +6,39 @@
  */
 class CMP3File
 {
-    const TITLE = "title";
-    const ARTIST = "artist";
-    const ALBUM = "album";
-    const YEAR = "year";
-    const COMMENT = "comment";
-    const GENRE = "genre";
+    const DEFAULT_PADDING   = "\000";
+    const TITLE             = "title";
+    const ARTIST            = "artist";
+    const ALBUM             = "album";
+    const YEAR              = "year";
+    const COMMENT           = "comment";
+    const HAS_TRACK_NUMBER  = "hasTrackNumber";
+    const TRACK_NUMBER      = "trackNumber";
+    const GENRE             = "genre";
 
-    const TITLE_LENGTH = 30;
-    const ARTIST_LENGTH = 30;
-    const ALBUM_LENGTH = 30;
-    const YEAR_LENGTH = 4;
-    const COMMENT_LENGTH = 30;
-    const GENRE_LENGTH = 1;
-    const ID3_DATA_LEN = 128;
+    const TITLE_LENGTH              = 30;
+    const ARTIST_LENGTH             = 30;
+    const ALBUM_LENGTH              = 30;
+    const YEAR_LENGTH               = 4;
+    const COMMENT_LENGTH            = 28;
+    const HAS_TRACK_NUMBER_LENGTH   = 1;
+    const TRACK_NUMBER_LENGTH       = 1;
+    const GENRE_LENGTH              = 1;
+    const ID3_DATA_LEN              = 128;
 
     /**
      * Fields ordered as per ID3 header
      * @var array
      */
     private static $fieldConfig = [
-        self::TITLE=>       self::TITLE_LENGTH,
-        self::ARTIST =>     self::ARTIST_LENGTH,
-        self::ALBUM =>      self::ALBUM_LENGTH,
-        self::YEAR =>       self::YEAR_LENGTH,
-        self::COMMENT =>    self::COMMENT_LENGTH,
-        self::GENRE =>      self::GENRE_LENGTH,
+        self::TITLE=>               self::TITLE_LENGTH,
+        self::ARTIST =>             self::ARTIST_LENGTH,
+        self::ALBUM =>              self::ALBUM_LENGTH,
+        self::YEAR =>               self::YEAR_LENGTH,
+        self::COMMENT =>            self::COMMENT_LENGTH,
+        self::HAS_TRACK_NUMBER =>   self::HAS_TRACK_NUMBER_LENGTH,
+        self::TRACK_NUMBER =>       self::TRACK_NUMBER_LENGTH,
+        self::GENRE =>              self::GENRE_LENGTH,
     ];
 
     /** @var string  */
@@ -46,6 +53,10 @@ class CMP3File
     private $year;
     /** @var string  */
     private $comment;
+    /** @var string */
+    private $hasTrackNumber = "\000";
+    /** @var string */
+    private $trackNumber = "\000";
     /** @var string  */
     private $genre;
     /** @var bool  */
@@ -83,9 +94,13 @@ class CMP3File
         }
     }
 
+    /**
+     * Does the file need ID3 tag info?
+     * @return bool
+     */
     public function needsID3Info()
     {
-        return $this->isID3Tagged() && $this->artist[0] == "\000" && $this->album[0] == "\000";
+        return $this->isID3Tagged() && ! (trim($this->artist[0]) && trim($this->album[0]));
     }
 
     /**
@@ -103,7 +118,7 @@ class CMP3File
     public function get($attrib)
     {
         $this->assertHasProperty($attrib);
-        return $this->$attrib;
+        return isset($this->$attrib) ? $this->$attrib : null;
     }
 
     /**
@@ -132,7 +147,7 @@ class CMP3File
      */
     private function assertHasProperty($attrib)
     {
-        if (!isset($this->$attrib) && isset(self::$fieldConfig[$attrib]))
+        if (!isset(self::$fieldConfig[$attrib]))
         {
             throw new Exception("Tried to access invalid property ($attrib)");
         }
