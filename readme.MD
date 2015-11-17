@@ -17,3 +17,9 @@ Running
 -------
 
     php src/test.php
+
+
+Testing
+-------
+
+    vendor/bin/phpunit Tests/
