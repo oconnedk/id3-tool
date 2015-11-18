@@ -13,7 +13,7 @@ findFiles("/media/sf_SharedDisk/mp3/", str_replace(".", "", MediaEntry::MEDIA_TY
 
 /**
  * @param string $path
- * @param string $pattern
+ * @param string $extension
  */
 function findFiles($path, $extension)
 {

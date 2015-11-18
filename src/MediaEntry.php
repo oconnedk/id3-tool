@@ -8,7 +8,7 @@
 
 namespace oconnedk\id3;
 
-class MediaEntry
+class MediaEntry implements MediaAware
 {
     const MEDIA_TYPE_EXTENSION = '.mp3';
     const NAME_SEPARATOR = ' - ';
