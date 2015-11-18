@@ -5,9 +5,11 @@
  * Date: 17/11/15
  * Time: 23:17
  */
-namespace oconnedk\id3;
+namespace oconnedk\Tests;
 
-class CMP3FileTest extends \PHPUnit_Framework_TestCase
+use oconnedk\id3\CMP3File;
+
+class CMP3FileTest extends ID3TestCase
 {
 
     public function testInvalidFileDoesntNeedID3Tags()

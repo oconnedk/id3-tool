@@ -6,9 +6,11 @@
  * Time: 23:25
  */
 
-namespace oconnedk\id3;
+namespace oconnedk\Tests;
 
-class MediaEntryTest extends \PHPUnit_Framework_TestCase
+use oconnedk\id3\MediaEntry;
+
+class MediaEntryTest extends ID3TestCase
 {
     public function testInferArtistAndTrackName()
     {

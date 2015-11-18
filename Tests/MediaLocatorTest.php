@@ -5,19 +5,14 @@
  * Date: 18/11/15
  * Time: 00:01
  */
-namespace oconnedk\id3;
+namespace oconnedk\Tests;
 
-class MediaLocatorTest extends \PHPUnit_Framework_TestCase
+use oconnedk\id3\MediaLocator;
+
+class MediaLocatorTest extends ID3TestCase
 {
     const INVALID_PATH = "INVALID/PATH";
     const MP3 = "mp3";
-
-    private static $resourcePath = "";
-
-    public static function setUpBeforeClass()
-    {
-        self::$resourcePath = __DIR__."/Resources";
-    }
 
     /**
      * @expectedException \Exception

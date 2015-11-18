@@ -22,7 +22,7 @@ Running
 Testing
 -------
 
-    vendor/bin/phpunit Tests/
+    vendor/bin/phpunit -v -c Tests/
 
 Coding Standard
 ---------------
