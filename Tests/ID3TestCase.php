@@ -20,5 +20,4 @@ class ID3TestCase extends \PHPUnit_Framework_TestCase
     {
         self::$resourcePath = __DIR__."/Resources";
     }
-
-} 
+}

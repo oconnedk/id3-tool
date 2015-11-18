@@ -27,5 +27,4 @@ class MediaLocatorTest extends ID3TestCase
         $found = MediaLocator::find(self::$resourcePath, self::MP3);
         $this->assertGreaterThan(0, count($found));
     }
-
 }

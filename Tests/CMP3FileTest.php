@@ -38,5 +38,4 @@ class CMP3FileTest extends ID3TestCase
         $file = new CMP3File(self::$resourcePath."/mp3/temp.emptytags.mp3");
         $this->assertTrue($file->needsID3Info());
     }
-
 }
