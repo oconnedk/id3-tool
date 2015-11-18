@@ -24,8 +24,19 @@ class CMP3FileTest extends ID3TestCase
         $this->assertFalse($file->isID3Tagged());
     }
 
-    public function testAlbumAndArtistNameChosen()
+    public function testHasTags()
     {
-
+        $file = new CMP3File(self::$resourcePath."/mp3/temp.withtags.mp3");
+        $this->assertTrue($file->isID3Tagged());
     }
-} 
+
+    /**
+     * Test that only mp3 files which have a tag header, but have blank info are deemed "needing tags"
+     */
+    public function testNeedsTags()
+    {
+        $file = new CMP3File(self::$resourcePath."/mp3/temp.emptytags.mp3");
+        $this->assertTrue($file->needsID3Info());
+    }
+
+}
