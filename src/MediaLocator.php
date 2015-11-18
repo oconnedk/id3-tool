@@ -25,7 +25,8 @@ class MediaLocator
         }
         $dirIter = new \RecursiveDirectoryIterator($path);
         $mainIter = new \RecursiveIteratorIterator($dirIter);
-        foreach (new \RegexIterator($mainIter, '/^.+\.'.$extension.'$/i', \RecursiveRegexIterator::GET_MATCH) as $match) {
+        $iter = new \RegexIterator($mainIter, '/^.+\.'.$extension.'$/i', \RecursiveRegexIterator::GET_MATCH);
+        foreach ($iter as $match) {
             $found[] = new $createClass(current($match));
         }
         return $found;
