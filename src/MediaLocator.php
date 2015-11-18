@@ -20,7 +20,7 @@ class MediaLocator
     public static function find($path, $extension, $createClass = "oconnedk\\id3\\MediaEntry")
     {
         $found = [];
-        if (!@dir($path)) { // Suppress potential errors so we can throw instead
+        if (!is_dir($path)) {
             throw new \Exception("$path is not a directory!");
         }
         $dirIter = new \RecursiveDirectoryIterator($path);

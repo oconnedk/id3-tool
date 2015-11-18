@@ -18,6 +18,12 @@ class CMP3FileTest extends ID3TestCase
         $this->assertFalse($file->needsID3Info());
     }
 
+    public function testHasNoTags()
+    {
+        $file = new CMP3File(self::$resourcePath."/mp3/temp.notags.mp3");
+        $this->assertFalse($file->isID3Tagged());
+    }
+
     public function testAlbumAndArtistNameChosen()
     {
 
