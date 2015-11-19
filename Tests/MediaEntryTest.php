@@ -22,7 +22,13 @@ class MediaEntryTest extends ID3TestCase
     public function testAlbumNameOverride()
     {
         $media = new MediaEntry("/parent/ignore - track.mp3");
-        $this->assertTrue($media->getArtistName() == "parent", "Expected ".$media->getArtistName()." to equal 'parent'");
-        $this->assertTrue($media->getTrackName() == "track", "Expected ".$media->getTrackName()." to equal 'track'");
+        $this->assertTrue(
+            $media->getArtistName() == "parent",
+            "Expected ".$media->getArtistName()." to equal 'parent'"
+        );
+        $this->assertTrue(
+            $media->getTrackName() == "track",
+            "Expected ".$media->getTrackName()." to equal 'track'"
+        );
     }
 }

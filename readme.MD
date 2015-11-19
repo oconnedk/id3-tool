@@ -35,6 +35,7 @@ Set-up
 ------
 
     git clone git@github.com:oconnedk/id3-tool.git
+    cd id3-tool
     composer install
 
 Usage
