@@ -22,12 +22,31 @@ This mini project then serves a number of purposes:
 Status
 ------
 
-Work-in-progress
+**Complete**
+
+- Media discovery
+
+**To-do**
+
+- Media amendment (auto-tagging files where necessary)
+
 
 Set-up
 ------
 
-    composer require oconnedk/id3
+    git clone git@github.com:oconnedk/id3-tool.git
+    composer install
+
+Usage
+-----
+
+To list albums (folders) requiring ID3 tag info:
+
+    app/console find /path/to/your/media
+
+e.g.
+
+    app/console find ./Tests/Resources/mp3/
 
 Testing
 -------
@@ -37,7 +56,7 @@ Testing
 Coding Standard
 ---------------
 
-Uses PSR2 - enforced with PHPCS, like this:
+Uses [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) - enforced with [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer), like this:
 
     ./vendor/bin/phpcs --config-set default_standard PSR2
     ./vendor/bin/phpcs src/ Tests/

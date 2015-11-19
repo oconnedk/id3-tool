@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+
+include_once __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+
+date_default_timezone_set('UTC');
+
+
+
+$app = new Application('ID3', '0.1.0');
+$commands = [
+    new app\command\FindCommand()
+];
+$app->addCommands($commands);
+$app->run();

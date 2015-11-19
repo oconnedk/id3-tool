@@ -10,13 +10,16 @@
     ],
     "autoload": {
         "psr-4": {
-            "oconnedk\\id3\\": "src/"
+            "oconnedk\\id3\\": "src/",
+            "app\\": "app/"
         }
     },
     "autoload-dev": {
         "psr-4": { "oconnedk\\Tests\\": "Tests/" }
     },
-    "require": {},
+    "require": {
+        "symfony/console": "2.*"
+    },
     "require-dev": {
         "phpunit/phpunit": "4.*",
         "squizlabs/php_codesniffer": "2.*"
