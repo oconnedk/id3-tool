@@ -24,4 +24,3 @@ script:
   - ./vendor/bin/phpunit -v -c Tests/
   - ./vendor/bin/phpcs --config-set default_standard PSR2
   - ./vendor/bin/phpcs src/ Tests/
-  

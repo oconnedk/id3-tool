@@ -3,6 +3,8 @@ ID3
 
 Simple ID3 processing - where ID3 libraries not installed/ you don't want the pain of installing a PECL library
 
+![Build Status](https://img.shields.io/travis/oconnedk/id3-tool.svg?style=flat-square)](https://travis-ci.org/oconnedk/id3-tool)
+
 Why?
 ----
 
@@ -54,6 +56,7 @@ Testing
 
     vendor/bin/phpunit -v -c Tests/
 
+
 Coding Standard
 ---------------
 
@@ -61,3 +64,11 @@ Uses [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2
 
     ./vendor/bin/phpcs --config-set default_standard PSR2
     ./vendor/bin/phpcs src/ Tests/
+
+
+Automation
+----------
+
+Automatic testing (PHPUnit) and coding standards compliance (PHPCS) covered by Travis.
+
+[TravisCI - Build Status](https://travis-ci.org/oconnedk/id3-tool/builds)
