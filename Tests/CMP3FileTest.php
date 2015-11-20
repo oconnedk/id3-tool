@@ -20,13 +20,13 @@ class CMP3FileTest extends ID3TestCase
 
     public function testHasNoTags()
     {
-        $file = new CMP3File(self::$resourcePath."/mp3/temp.notags.mp3");
+        $file = self::getMP3TestFile("temp.notags.mp3");
         $this->assertFalse($file->isID3Tagged());
     }
 
     public function testHasTags()
     {
-        $file = new CMP3File(self::$resourcePath."/mp3/temp.withtags.mp3");
+        $file = self::getMP3TestFile("temp.withtags.mp3");
         $this->assertTrue($file->isID3Tagged());
     }
 
@@ -35,7 +35,16 @@ class CMP3FileTest extends ID3TestCase
      */
     public function testNeedsTags()
     {
-        $file = new CMP3File(self::$resourcePath."/mp3/temp.emptytags.mp3");
+        $file = self::getMP3TestFile("temp.emptytags.mp3");
         $this->assertTrue($file->needsID3Info());
+    }
+
+    /**
+     * @param $filename
+     * @return CMP3File
+     */
+    private static function getMP3TestFile($filename)
+    {
+        return new CMP3File(self::$resourcePath."/mp3/MP3 Tests/$filename");
     }
 }
