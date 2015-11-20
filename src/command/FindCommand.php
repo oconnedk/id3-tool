@@ -27,7 +27,12 @@ class FindCommand extends Command
         $this->setName($cmd)
             ->setDescription('Finds media requiring ID3 tags in the specified path')
             ->setDefinition([
-                new InputArgument(self::PATH_ARGUMENT, InputArgument::REQUIRED, 'The directory containing your media', null),
+                new InputArgument(
+                    self::PATH_ARGUMENT,
+                    InputArgument::REQUIRED,
+                    'The directory containing your media',
+                    null
+                ),
             ])
             ->setHelp(<<<EOT
 The <info>$cmd</info> command locates any albums in your specified media directory requiring ID3 tags
@@ -35,21 +40,19 @@ EOT
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $needingID3Tags = [];
         foreach (MediaLocator::find($input->getArgument(self::PATH_ARGUMENT), self::FIND_MEDIATYPE) as $mediaEntry) {
             $path = $mediaEntry->getPath();
             $file = new CMP3File($path);
-            if ($file->needsID3Info())
-            {
+            if ($file->needsID3Info()) {
                 $needingID3Tags[] = $path;
             }
         }
-        if ($needingID3Tags)
-        {
+        if ($needingID3Tags) {
             $output->writeln("These files need ID3 tags:");
             $output->writeln(implode(PHP_EOL, $needingID3Tags));
         }
     }
-
-} 
+}
