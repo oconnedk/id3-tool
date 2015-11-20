@@ -10,8 +10,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "oconnedk\\id3\\": "src/",
-            "app\\": "app/"
+            "oconnedk\\id3\\": "src/"
         }
     },
     "autoload-dev": {

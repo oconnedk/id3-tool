@@ -4,14 +4,13 @@
 include_once __DIR__ . '/../vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
+use oconnedk\id3\command\FindCommand;
 
 date_default_timezone_set('UTC');
 
-
-
 $app = new Application('ID3', '0.1.0');
 $commands = [
-    new app\command\FindCommand()
+    new FindCommand()
 ];
 $app->addCommands($commands);
 $app->run();

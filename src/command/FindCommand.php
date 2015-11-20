@@ -6,16 +6,14 @@
  * Time: 17:13
  */
 
-namespace app\command;
+namespace oconnedk\id3\command;
 
 use oconnedk\id3\CMP3File;
-use oconnedk\id3\MediaEntry;
 use oconnedk\id3\MediaLocator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 
 class FindCommand extends Command
 {
